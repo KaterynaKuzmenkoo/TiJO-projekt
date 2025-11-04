@@ -1,0 +1,175 @@
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #f7f7fb;
+}
+
+.card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 24px rgba(24, 24, 24, 0.06);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+fieldset {
+  border: 1px solid #e7e7ee;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+legend {
+  position: static;
+  top: 0;
+  margin: 0 0 0.6rem 0;
+  padding: 0 0.5rem;
+  display: inline-block;
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid #d8d8e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input[type="number"]#gross,
+input[type="number"]#age {
+  width: 280px;
+}
+
+input[type="number"]#kup-fixed,
+input[type="number"]#kup-percent {
+  width: 390px;
+}
+
+select#contract {
+  width: 200px;
+}
+
+label:has(input[type="checkbox"]) {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+label input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+label span {
+  vertical-align: middle;
+}
+
+.btn {
+  background: #2f6fed;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background: #2558d6;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 1rem;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.muted {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background: #eef3ff;
+  color: #2f6fed;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.right {
+  text-align: right;
+}
+
+.hidden {
+  display: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th,
+td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.result-block {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f0f0f5;
+}
+
+.result-block h3 {
+  color: #2f6fed;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator wynagrodzenia netto (demo)</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="card">
+    <header>
+      <h1>
+        Kalkulator wynagrodzenia netto
+        <span class="pill">projekt TIJO • 2025</span>
+      </h1>
+      <p class="muted">Przybliżony wynik netto na podstawie uproszczonych zasad.</p>
+    </header>
+
+    <form id="calc-form" class="grid">
+      <fieldset>
+        <legend><b>Dane wejściowe</b></legend>
+
+        <div class="row">
+          <div>
+            <label for="gross">Kwota brutto (PLN)</label>
+            <input
+              type="number"
+              id="gross"
+              step="0.01"
+              value="8000"
+              required
+            >
+          </div>
+
+          <div>
+            <label for="contract">Rodzaj umowy</label>
+            <select id="contract">
+              <option value="etat">etat</option>
+              <option value="zlecenie">zlecenie</option>
+              <option value="dzielo">dzielo</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="age">Wiek</label>
+            <input
+              type="number"
+              id="age"
+              value="30"
+              min="0"
+              max="120"
+            >
+          </div>
+        </div>
+
+        <div class="row-2">
+          <div>
+            <label>
+              <input type="checkbox" id="is-student">
+              <span>Jestem studentem</span>
+            </label>
+            <label>
+              <input type="checkbox" id="ulga-mlodzi">
+              <span>Ulga dla młodych (&lt;26) – PIT=0</span>
+            </label>
+            <label>
+              <input type="checkbox" id="creative-50">
+              <span>50% KUP (twórcze)</span>
+            </label>
+          </div>
+
+          <div>
+            <label for="kup-fixed">
+              KUP (stała kwota, tylko etat) – opcjonalnie
+            </label>
+            <input
+              type="number"
+              id="kup-fixed"
+              step="0.01"
+              placeholder="np. 250"
+            >
+
+            <label for="kup-percent">
+              KUP (procent 0–1, zlecenie/dzieło) – opcjonalnie
+            </label>
+            <input
+              type="number"
+              id="kup-percent"
+              step="0.01"
+              placeholder="np. 0.2"
+            >
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" id="submit-btn" type="submit">
+            Oblicz
+          </button>
+          <span class="muted" id="status"></span>
+        </div>
+      </fieldset>
+    </form>
+
+    <section id="result-block" class="result-block hidden">
+      <h3>Wynik</h3>
+      <table>
+        <tbody id="result-table"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
