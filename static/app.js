@@ -9,10 +9,10 @@ const formInputs = {
   contract: document.getElementById('contract'),
   age: document.getElementById('age'),
   isStudent: document.getElementById('is-student'),
-  ulgaMlodzi: document.getElementById('ulga-mlodzi'),
+  youthTaxRelief: document.getElementById('ulga-mlodzi'),
   creative50: document.getElementById('creative-50'),
-  kupFixed: document.getElementById('kup-fixed'),
-  kupPercent: document.getElementById('kup-percent')
+  taxDeductibleFixed: document.getElementById('kup-fixed'),
+  taxDeductiblePercent: document.getElementById('kup-percent')
 };
 
 function formatMoney(value) {
@@ -26,19 +26,19 @@ function buildRequestPayload() {
     contract: formInputs.contract.value,
     age: Number(formInputs.age.value),
     is_student: formInputs.isStudent.checked,
-    ulga_mlodzi: formInputs.ulgaMlodzi.checked,
+    youth_tax_relief: formInputs.youthTaxRelief.checked,
     creative_50: formInputs.creative50.checked
   };
 
-  const kupFixedValue = formInputs.kupFixed.value;
-  const kupPercentValue = formInputs.kupPercent.value;
+  const taxDeductibleFixedValue = formInputs.taxDeductibleFixed.value;
+  const taxDeductiblePercentValue = formInputs.taxDeductiblePercent.value;
 
-  if (kupFixedValue !== '') {
-    payload.kup_fixed = Number(kupFixedValue);
+  if (taxDeductibleFixedValue !== '') {
+    payload.tax_deductible_fixed = Number(taxDeductibleFixedValue);
   }
 
-  if (kupPercentValue !== '') {
-    payload.kup_percent = Number(kupPercentValue);
+  if (taxDeductiblePercentValue !== '') {
+    payload.tax_deductible_percent = Number(taxDeductiblePercentValue);
   }
 
   return payload;
@@ -66,7 +66,7 @@ function displayResults(data) {
   const resultRows = [
     ['Składki społeczne (pracownik)', formatMoney(data.social_total)],
     ['Składka zdrowotna', formatMoney(data.health)],
-    ['Koszty uzyskania przychodu (KUP)', formatMoney(data.kup)],
+    ['Koszty uzyskania przychodu (KUP)', formatMoney(data.tax_deductible_costs)],
     ['Podstawa PIT', formatMoney(data.pit_base)],
     ['Podatek PIT', formatMoney(data.pit)],
     ['Kwota netto', '<b>' + formatMoney(data.net) + '</b>']

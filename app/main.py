@@ -21,11 +21,11 @@ def calculate(req: CalcRequest):
             contract=logic.ContractType(req.contract.value),
             age=req.age,
             is_student=req.is_student,
-            kup_fixed=req.kup_fixed,
-            kup_percent=req.kup_percent,
+            tax_deductible_fixed=req.tax_deductible_fixed,
+            tax_deductible_percent=req.tax_deductible_percent,
             creative_50=req.creative_50,
-            ulga_mlodzi=req.ulga_mlodzi,
-            include_social_for_zlecenie=req.include_social_for_zlecenie,
+            youth_tax_relief=req.youth_tax_relief,
+            include_social_for_mandate=req.include_social_for_mandate,
         )
     )
     return CalcResponse(**res.__dict__)

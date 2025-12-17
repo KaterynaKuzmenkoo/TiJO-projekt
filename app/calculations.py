@@ -4,9 +4,9 @@ from enum import Enum
 
 
 class ContractType(str, Enum):
-    ETAT = "etat"
-    ZLECENIE = "zlecenie"
-    DZIELO = "dzielo"
+    EMPLOYMENT = "employment"
+    MANDATE = "mandate"
+    WORK = "work"
 
 
 @dataclass
@@ -15,18 +15,18 @@ class Inputs:
     contract: ContractType
     age: int = 30
     is_student: bool = False
-    kup_fixed: float | None = None
-    kup_percent: float | None = None
+    tax_deductible_fixed: float | None = None
+    tax_deductible_percent: float | None = None
     creative_50: bool = False
-    ulga_mlodzi: bool = False
-    include_social_for_zlecenie: bool = True
+    youth_tax_relief: bool = False
+    include_social_for_mandate: bool = True
 
 
 @dataclass
 class Result:
     social_total: float
     health: float
-    kup: float
+    tax_deductible_costs: float
     pit_base: float
     pit: float
     net: float
@@ -71,9 +71,9 @@ class SalaryCalculator(ABC):
         return tax
 
     def _is_eligible_for_youth_tax_relief(self) -> bool:
-        return (self.inputs.ulga_mlodzi and
+        return (self.inputs.youth_tax_relief and
                 self.inputs.age < 26 and
-                self.inputs.contract in (ContractType.ETAT, ContractType.ZLECENIE))
+                self.inputs.contract in (ContractType.EMPLOYMENT, ContractType.MANDATE))
 
     def calculate(self) -> Result:
         social_contributions = self.calculate_social_contributions()
@@ -88,31 +88,31 @@ class SalaryCalculator(ABC):
         return Result(
             social_total=_round_to_two_decimals(social_contributions),
             health=_round_to_two_decimals(health_contribution),
-            kup=_round_to_two_decimals(tax_deductible_costs),
+            tax_deductible_costs=_round_to_two_decimals(tax_deductible_costs),
             pit_base=_round_to_two_decimals(tax_base),
             pit=_round_to_two_decimals(income_tax),
             net=_round_to_two_decimals(net_salary),
         )
 
 
-class EtatCalculator(SalaryCalculator):
+class EmploymentCalculator(SalaryCalculator):
 
     def calculate_social_contributions(self) -> float:
         return self.gross_amount * SOCIAL_EMPLOYEE_PERCENTAGE
 
     def calculate_tax_deductible_costs(self, social_contributions: float) -> float:
-        if self.inputs.kup_fixed is not None:
-            return self.inputs.kup_fixed
+        if self.inputs.tax_deductible_fixed is not None:
+            return self.inputs.tax_deductible_fixed
         return DEFAULT_TAX_DEDUCTIBLE_COSTS_ETAT
 
     def calculate_health_contribution(self, social_contributions: float) -> float:
         return super().calculate_health_contribution(social_contributions)
 
 
-class ZlecenieCalculator(SalaryCalculator):
+class MandateCalculator(SalaryCalculator):
 
     def calculate_social_contributions(self) -> float:
-        if not self.inputs.include_social_for_zlecenie:
+        if not self.inputs.include_social_for_mandate:
             return 0.0
 
         if self.inputs.is_student and self.inputs.age < 26:
@@ -128,8 +128,8 @@ class ZlecenieCalculator(SalaryCalculator):
     def _get_tax_deductible_percentage(self) -> float:
         if self.inputs.creative_50:
             return 0.5
-        if self.inputs.kup_percent is not None:
-            return self.inputs.kup_percent
+        if self.inputs.tax_deductible_percent is not None:
+            return self.inputs.tax_deductible_percent
         return DEFAULT_TAX_DEDUCTIBLE_COSTS_PERCENTAGE
 
     def calculate_health_contribution(self, social_contributions: float) -> float:
@@ -138,7 +138,7 @@ class ZlecenieCalculator(SalaryCalculator):
         return 0.0
 
 
-class DzieloCalculator(SalaryCalculator):
+class WorkCalculator(SalaryCalculator):
 
     def calculate_social_contributions(self) -> float:
         return 0.0
@@ -150,8 +150,8 @@ class DzieloCalculator(SalaryCalculator):
     def _get_tax_deductible_percentage(self) -> float:
         if self.inputs.creative_50:
             return 0.5
-        if self.inputs.kup_percent is not None:
-            return self.inputs.kup_percent
+        if self.inputs.tax_deductible_percent is not None:
+            return self.inputs.tax_deductible_percent
         return DEFAULT_TAX_DEDUCTIBLE_COSTS_PERCENTAGE
 
     def calculate_health_contribution(self, social_contributions: float) -> float:
@@ -167,9 +167,9 @@ class CalculatorFactory:
     @staticmethod
     def create_calculator(inputs: Inputs) -> SalaryCalculator:
         calculators = {
-            ContractType.ETAT: EtatCalculator,
-            ContractType.ZLECENIE: ZlecenieCalculator,
-            ContractType.DZIELO: DzieloCalculator,
+            ContractType.EMPLOYMENT: EmploymentCalculator,
+            ContractType.MANDATE: MandateCalculator,
+            ContractType.WORK: WorkCalculator,
         }
 
         calculator_class = calculators.get(inputs.contract)

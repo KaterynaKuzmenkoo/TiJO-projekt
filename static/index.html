@@ -35,9 +35,9 @@
           <div>
             <label for="contract">Rodzaj umowy</label>
             <select id="contract">
-              <option value="etat">etat</option>
-              <option value="zlecenie">zlecenie</option>
-              <option value="dzielo">dzielo</option>
+              <option value="employment">Umowa o pracę (employment)</option>
+              <option value="mandate">Umowa zlecenie (mandate)</option>
+              <option value="work">Umowa o dzieło (work)</option>
             </select>
           </div>
 
@@ -61,17 +61,17 @@
             </label>
             <label>
               <input type="checkbox" id="ulga-mlodzi">
-              <span>Ulga dla młodych (&lt;26) – PIT=0</span>
+              <span>Ulga dla młodych (&lt;26) – PIT=0 (youth_tax_relief)</span>
             </label>
             <label>
               <input type="checkbox" id="creative-50">
-              <span>50% KUP (twórcze)</span>
+              <span>50% KUP (twórcze) (creative_50)</span>
             </label>
           </div>
 
           <div>
             <label for="kup-fixed">
-              KUP (stała kwota, tylko etat) – opcjonalnie
+              KUP (stała kwota, tylko employment) – opcjonalnie (tax_deductible_fixed)
             </label>
             <input
               type="number"
@@ -81,7 +81,7 @@
             >
 
             <label for="kup-percent">
-              KUP (procent 0–1, zlecenie/dzieło) – opcjonalnie
+              KUP (procent 0–1, mandate/work) – opcjonalnie (tax_deductible_percent)
             </label>
             <input
               type="number"
